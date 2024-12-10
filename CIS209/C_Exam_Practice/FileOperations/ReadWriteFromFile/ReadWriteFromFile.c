@@ -1,37 +1,27 @@
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-char *ReadDataFromFile(char *fileName, int *totalLines);
-
 int main() {
+
+  int data[1000000];
   FILE *file;
-  int fileRows = 0;
+  char fileInput[30];
+  printf("Please place your .bin file in the current directory and input its "
+         "exact name, with file extension.");
 
-  return 0;
-}
+  scanf("%s", fileInput);
 
-char *ReadDataFromFile(char *fileName, int *totalLines) {
-  FILE *fileRead;
-  fileRead = fopen(fileName, "r");
+  file = fopen(fileInput, "rb");
 
-  if (fileRead == NULL)
-    return NULL;
-
-  // Get the file sile for the entire allocation
-  fseek(fileRead, 0, SEEK_END);
-  size_t size = ftell(fileRead);
-  fseek(fileRead, 0, SEEK_SET);
-
-  while (!feof(fileRead)) {
-    if (fgetc(fileRead) == '\n')
-      (*totalLines)++;
+  if (file == NULL) {
+    printf("Error in opening requested file. \n");
+    return 1;
   }
 
-  fseek(fileRead, 0, SEEK_SET);
+  fread(data, sizeof(data), 1, file);
 
-  char *fileData =
-      malloc(size * sizeof(char)); // Creates a char pointer for the
-                                   // entire file to be allocatted.
+  fclose(file);
+
+  return 0;
 }
