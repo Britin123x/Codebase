@@ -8,8 +8,9 @@ int main() {
   FILE *file;
   char fileInput[30];
   printf("Please place your .bin file in the current directory and input its "
-         "exact name, with file extension.");
+         "exact name, with file extension.\n ");
 
+  printf("File Name:");
   scanf("%s", fileInput);
 
   file = fopen(fileInput, "rb");
@@ -22,6 +23,13 @@ int main() {
   fread(data, sizeof(data), 1, file);
 
   fclose(file);
+
+  for (int i = 0; i < 1000000; i++) {
+    if (data[i] == EOF)
+      break;
+    else
+      printf("%d\n", data[i]);
+  }
 
   return 0;
 }
